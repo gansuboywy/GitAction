@@ -6,9 +6,9 @@ name: FirstWorkflow
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ master, Dev ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, Dev]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,7 +38,8 @@ jobs:
           echo "::debug::action_ref=${{ github.action_ref }}"
           echo "::debug::env=${{ github.env }}"
           echo "::debug::ref=${{ github.ref }}"
-          echo "::debug::path=${{ github.path }}"
+          echo "::debug::token=${{ secrets.GITHUB_TOKEN }}"
+
  
  
 
@@ -46,16 +47,23 @@ jobs:
       - name: check out source branch
         uses: actions/checkout@v3
         with:
-          # ref: refs/heads/Dev
+          ref: refs/heads/master
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: ${BASE_BRANCH_NAME}
+
+      - name: copy files
         run: |
+          git fetch
           git check master
-          git check Dev 
+          git check Dev dev.txt
+          git add -A
+          git commit -am "git commit"
+          git push origin master
 
 
  
-      - name: check out destination branch
-        uses: actions/checkout@v3
+      # - name: check out destination branch
+      #   uses: actions/checkout@v3
 
  
 #      - name: copy file
