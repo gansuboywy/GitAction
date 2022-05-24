@@ -33,21 +33,17 @@ jobs:
         run: |
           echo “::debug::workspace=${{ github.workspace }}”
           echo "::debug::repository=${{ github.repository }}"
-          echo "::debug::action=${{ github.action }}"
-          echo "::debug::action_path=${{ github.action_path }}"
-          echo "::debug::action_ref=${{ github.action_ref }}"
-          echo "::debug::env=${{ github.env }}"
+          # echo "::debug::action=${{ github.action }}"
+          # echo "::debug::action_path=${{ github.action_path }}"
+          # echo "::debug::action_ref=${{ github.action_ref }}"
+          # echo "::debug::env=${{ github.env }}"
           echo "::debug::ref=${{ github.ref }}"
           echo "::debug::token=${{ secrets.GITHUB_TOKEN }}"
-
- 
- 
-
 
       - name: check out source branch
         uses: actions/checkout@v3
         with:
-          ref: refs/heads/master
+          ref: refs/heads/Dev
           token: ${{ secrets.GITHUB_TOKEN }}
           path: ${BASE_BRANCH_NAME}
 
