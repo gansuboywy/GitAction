@@ -15,9 +15,9 @@ on:
 
 env:
   BASE_BRANCH_NAME: 'Dev'
-  BASE_BRANCH_SOURCE_FOLD: 'src/main/resources'
+  BASE_BRANCH_SOURCE_FOLD: 'src/main/java/resources/'
   TARGET_BRANCH_NAME: 'master'
-  TARGET_BRANCH_DEST_FOLD: 'src/main/resources'
+  TARGET_BRANCH_DEST_FOLD: 'src/main/java/resources/'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
