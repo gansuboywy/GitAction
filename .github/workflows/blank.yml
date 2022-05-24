@@ -40,14 +40,14 @@ jobs:
       - name: check out source branch
         uses: actions/checkout@v3
         with:
-          ref: refs/heads/${{BASE_BRANCH_NAME}}
+          ref: refs/heads/${{ env.BASE_BRANCH_NAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: ${BASE_BRANCH_NAME}
+          path: ${{ env.BASE_BRANCH_NAME }}
 
       - name: check out target branch
         uses: actions/checkout@v3
         with:
-          ref: refs/heads/${{ TARGET_BRANCH_NAME }}
+          ref: refs/heads/${{ env.TARGET_BRANCH_NAME }}
           token: ${{ secrets.GITHUB_TOKEN }}
           # path: ${{BASE_BRANCH_NAME}}
 
@@ -62,7 +62,7 @@ jobs:
  
       - name: copy file
         run: |
-          cp ./{BASE_BRANCH_NAME}/${BASE_BRANCH_SOURCE_FOLD} ${TARGET_BRANCH_DEST_FOLD}
+          cp ./${{ env.BASE_BRANCH_NAME }}/${{ env.BASE_BRANCH_SOURCE_FOLD }} ${{ env.TARGET_BRANCH_DEST_FOLD }}
 
 
       # Runs a single command using the runners shell
