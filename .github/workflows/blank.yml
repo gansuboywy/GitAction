@@ -8,13 +8,13 @@ on:
   push:
     branches: [ master, Dev ]
   pull_request:
-    branches: [ master, Dev]
+    branches: [ master, Dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
-  BASE_BRANCH_NAME : 'Dev'
+  BASE_BRANCH_NAME: 'Dev'
   BASE_BRANCH_SOURCE_FOLD: 'src/main/resources'
   TARGET_BRANCH_NAME: 'master'
   TARGET_BRANCH_DEST_FOLD: 'src/main/resources'
@@ -40,9 +40,9 @@ jobs:
       - name: check out source branch
         uses: actions/checkout@v3
         with:
-          ref: refs/heads/${{ BASE_BRANCH_NAME }}
+          ref: refs/heads/${{BASE_BRANCH_NAME}}
           token: ${{ secrets.GITHUB_TOKEN }}
-          path: ${{ BASE_BRANCH_NAME }}
+          path: ${BASE_BRANCH_NAME}
 
       - name: check out target branch
         uses: actions/checkout@v3
@@ -59,13 +59,10 @@ jobs:
       #     git add -A
       #     git commit -am "git commit"
       #     git push origin master
-
-
-
  
       - name: copy file
-       run: |
-         cp ./{{ BASE_BRANCH_NAME }}/${{ BASE_BRANCH_SOURCE_FOLD }} ${{ TARGET_BRANCH_DEST_FOLD }}
+        run: |
+          cp ./{BASE_BRANCH_NAME}/${BASE_BRANCH_SOURCE_FOLD} ${TARGET_BRANCH_DEST_FOLD}
 
 
       # Runs a single command using the runners shell
