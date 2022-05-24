@@ -13,6 +13,12 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  BASE_BRANCH_NAME : 'Dev'
+  BASE_BRANCH_SOURCE_FOLD: 'src/main/resources'
+  TARGET_BRANCH_NMAME: 'master'
+  TARGET_BRANCH_DEST_FOLD: 'master'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -23,10 +29,39 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: show enviroment variable
+        run: |
+          echo “::debug::workspace=${{ github.workspace }}”
+          echo "::debug::repository=${{ github.repository }}"
+          echo "::debug::action=${{ github.action }}"
+          echo "::debug::action_path=${{ github.action_path }}"
+          echo "::debug::action_ref=${{ github.action_ref }}"
+          echo "::debug::env=${{ github.env }}"
+          echo "::debug::ref=${{ github.ref }}"
+          echo "::debug::path=${{ github.path }}"
+ 
+ 
 
-      - name: show workspace
-        run: echo $GITHUB_WORKSPACE
+
+      - name: check out source branch
+        uses: actions/checkout@v3
+        with:
+          # ref: refs/heads/Dev
+          path: ${BASE_BRANCH_NAME}
+        run: |
+          git check master
+          git check Dev 
+
+
+ 
+      - name: check out destination branch
+        uses: actions/checkout@v3
+
+ 
+#      - name: copy file
+#        run: |
+#          cp ./${BASE_BRANCH_NAME}/${BASE_BRANCH_SOURCE_FOLD} ${TARGET_BRANCH_DEST_FOLD} 
+
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
