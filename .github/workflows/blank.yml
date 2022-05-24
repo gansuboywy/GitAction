@@ -44,6 +44,20 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: ${{ env.BASE_BRANCH_NAME }}
 
+       - name: Fetch action
+         id: pl
+         uses: Rishabh510/Path-lister-action@master
+         with:
+           path: ".github/"
+           type: ".yml"
+
+      - name: Output results
+        run: |
+          echo "Found ${{ steps.pl.outputs.path_count }} file(s) with this extension:"
+          for i in ${{ steps.pl.outputs.paths }}; do
+          echo $i
+          done
+
       - name: check out target branch
         uses: actions/checkout@v3
         with:
