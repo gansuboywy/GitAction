@@ -24,7 +24,7 @@ env:
   BASE_BRANCH_SOURCE_FOLD: 'src/main/java/resources/'
   TARGET_BRANCH_NAME: 'master'
   TARGET_BRANCH_DEST_FOLD: 'src/main/java/resources/'
-  PREFIX_OF_RELEASE_TAG: 'Rel_'
+  PREFIX_OF_RELEASE_TAG: 'Rel'
 
 jobs:
   build:
@@ -81,9 +81,10 @@ jobs:
           cd ${{ env.TARGET_BRANCH_NAME }}
           mvn clean package -DskipTests=true
 
-      -name: create new name of tag for release
+      - name: create new name of tag for release
         run: |
           echo ::set-output name=CURRENT_TAG::${GITHUB_REF#refs/tags/}
+          echo $CURRENT_TAG
 
       - name: Release
         uses: softprops/action-gh-release@v1
