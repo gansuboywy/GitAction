@@ -82,6 +82,7 @@ jobs:
           mvn clean package -DskipTests=true
 
       - name: create new name of tag for release
+        id: release_name
         run: |
           echo ::set-output name=CURRENT_TAG::${GITHUB_REF#refs/tags/}
           echo $CURRENT_TAG
@@ -92,8 +93,8 @@ jobs:
         with:
           draft: false
           prerelease: false
-          name: ${{ env.PREFIX_OF_RELEASE_TAG }}$CURRENT_TAG
-          tag_name: ${{ env.PREFIX_OF_RELEASE_TAG }}$CURRENT_TAG
+          name: ${{ env.PREFIX_OF_RELEASE_TAG }}${{ steps.release_name.outputs.CURRENT_TAG }}
+          tag_name: ${{ env.PREFIX_OF_RELEASE_TAG }}${{ steps.release_name.outputs.CURRENT_TAG }}
           # name: ${{ github.ref }}
           # tag_name: ${{ github.ref }}
           files: |
