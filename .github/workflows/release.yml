@@ -8,7 +8,7 @@ on:
   push:
     branches: [ master, Dev ]
     tags:
-      - "api-v*.*.*"
+      - "v*.*.*"
 
   pull_request:
     branches: [ master, Dev ]
@@ -24,6 +24,7 @@ env:
   BASE_BRANCH_SOURCE_FOLD: 'src/main/java/resources/'
   TARGET_BRANCH_NAME: 'master'
   TARGET_BRANCH_DEST_FOLD: 'src/main/java/resources/'
+  PREFIX_OF_RELEASE_TAG: 'Rel_'
 
 jobs:
   build:
@@ -79,15 +80,10 @@ jobs:
         run: |
           cd ${{ env.TARGET_BRANCH_NAME }}
           mvn clean package -DskipTests=true
-          cd ..
-          find ${{ env.TARGET_BRANCH_NAME }} -print
 
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: "minor"
+      -name: create new name of tag for release
+        run: |
+          echo ::set-output name=CURRENT_TAG::${GITHUB_REF#refs/tags/}
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -95,8 +91,8 @@ jobs:
         with:
           draft: false
           prerelease: false
-          name: ${{ steps.tag_version.outputs.new_tag }}
-          tag_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          name: ${{ env.PREFIX_OF_RELEASE_TAG }}$CURRENT_TAG
+          tag_name: ${{ env.PREFIX_OF_RELEASE_TAG }}$CURRENT_TAG
           # name: ${{ github.ref }}
           # tag_name: ${{ github.ref }}
           files: |
