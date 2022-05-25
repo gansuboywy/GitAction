@@ -100,7 +100,7 @@ jobs:
           # name: ${{ github.ref }}
           # tag_name: ${{ github.ref }}
           files: |
-            ${{ env.TARGET_BRANCH_NAME }}/target/aeonpeopleportal-api.jar
+            ${{ github.workspace }}/${{ env.TARGET_BRANCH_NAME }}/target/GitAction-1.jar
 
       # - name: Bump version and push tag
       #   id: tag_version
