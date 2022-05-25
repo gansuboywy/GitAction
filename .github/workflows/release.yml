@@ -72,13 +72,11 @@ jobs:
       - name: build with maven
         run: |
           cd ${{ env.TARGET_BRANCH_NAME }}
-          java --version
-          mvn --version
           mvn clean package -DskipTests=true
 
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+        # if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             ${{ env.TARGET_BRANCH_NAME }}/target/aeonpeopleportal-api.jar
